@@ -17,7 +17,8 @@ function createGrid(size) {
         box.style.height = `${cellSize}px`;
         container.appendChild(box);
         box.addEventListener('mouseover', () => {
-            box.style.backgroundColor = 'green';
+            const randomColor = getRandomColor();
+            box.style.backgroundColor = randomColor;
         })
     }
 }
@@ -30,6 +31,11 @@ function randomColorGenerator() {
         const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
         colors.push(randomColor);
     }
+}
+
+function getRandomColor() {
+    randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
 }
 
 
@@ -58,4 +64,5 @@ btn.addEventListener('click', () => {
 })
 
 createGrid(gridSize);
+randomColorGenerator();
 
