@@ -4,18 +4,10 @@ const colors = [];
 
 // creates divs inside the container
 function createGrid(size) {
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-
+    clearContainer();
     const cellSize = 800 / size;
-
     for (let i = 0; i < gridSize * gridSize; i++) {
-        const box = document.createElement('div');
-        box.classList.add('box');
-        box.style.width = `${cellSize}px`;
-        box.style.height = `${cellSize}px`;
-        container.appendChild(box);
+        const box = createBox(cellSize);
         box.addEventListener('mouseover', () => {
             const randomColor = getRandomColor();
             box.style.backgroundColor = randomColor;
@@ -23,7 +15,22 @@ function createGrid(size) {
     }
 }
 
+// clears container
+function clearContainer() {
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+}
 
+//creates divs inside main container
+function createBox(size) {
+    const box = document.createElement('div');
+    box.classList.add('box');
+    box.style.width = `${size}px`;
+    box.style.height = `${size}px`;
+    container.appendChild(box);
+    return box;
+}
 
 // generates a random color for drawing
 function randomColorGenerator() {
@@ -38,9 +45,7 @@ function getRandomColor() {
     return colors[randomIndex];
 }
 
-
-const btn = document.querySelector('#btn');
-btn.addEventListener('click', () => {
+function promptForDivSize(){
     let divSize;
     let isValid = false;
 
@@ -57,11 +62,12 @@ btn.addEventListener('click', () => {
             gridSize = number;
             createGrid(gridSize);
         } else {
-            alert("Please enter a valid number.")
+            alert("Please enter a valid number.");
         }
     }
-    
-})
+}
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', promptForDivSize);
 
 createGrid(gridSize);
 randomColorGenerator();
